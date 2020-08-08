@@ -9,7 +9,7 @@ const { generateMessage }= require('./utils/messages');
 const Filter = require('bad-words');
 const io = socketio(server);
 
-const {addUser, removeUser, getUser, getUsersInRoom } = reqire('/utils/users');
+const {addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users');
 const publicDirectory=path.join(__dirname,'..');
 app.use(express.static(publicDirectory));
 io.on('connection',(socket)=>{
@@ -42,6 +42,9 @@ io.on('connection',(socket)=>{
         callback()
     })
 });
-server.listen(process.env.PORT,()=>{
-    console.log("Server is running at port "+process.env.PORT);
+
+const port= process.env.PORT | 3000;
+
+server.listen(port,()=>{
+    console.log("Server is running at port "+port);
 })
