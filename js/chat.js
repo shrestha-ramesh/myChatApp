@@ -33,3 +33,19 @@ socket.on('message', (message)=>{
     $messages.insertAdjacentHTML('beforeend', html);
     autoscroll();
 })
+socket.on('locationMessage', (location)=>{
+    const html=Mustache.render(locationTemplate,{
+        username:location.username,
+        location:location.text,
+        createdAt:moment(location.createdAt).format('h:mm a')
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+    autoscroll();
+})
+socket.on('roomData', ({room,users})=>{
+    const html =Mustache.render(sidebarTemplate,{
+        room,
+        users
+    })
+    document.querySelector('#sidebar').innerHTML=html;
+})
