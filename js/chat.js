@@ -49,3 +49,39 @@ socket.on('roomData', ({room,users})=>{
     })
     document.querySelector('#sidebar').innerHTML=html;
 })
+
+$form.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    $form.setAttribute('disabled', 'disabled');
+    const inpValue=$input.value;
+    if(!inpValue){
+        return alert('Please Enter a message on the field');
+    }
+    socket.emit('sendMessage', inpValue, (error)=>{
+        $form.removeAttribute('disabled');
+        $input.value='';
+        $input.focus();
+        if(error){
+            return console.log(error);
+        }
+        console.log("Message Delivered");
+    })
+})
+$location_btn.addEventListener('click',()=>{
+    $location_btn.setAttribute('disabled', 'disabled')
+    if(!navigator.geolocation){
+        return alert('Geolocation is not supported by your browser');
+    }
+    navigator.geolocation.getCurrentPosition((position)=>{
+        socket.emit('sendLocatino', `https://google.com/maps?q=${position.coords.latitude}, ${position.coords.longitude}`,()=>{
+            console.log("Location Delivered")
+            $location_btn.removeAttribute('disabled')
+        })
+    })
+})
+socket.emit('join',{username,room},(erro)=>{
+    if(error){
+        alert(error)
+        location.href='/'
+    }
+})
