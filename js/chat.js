@@ -79,7 +79,7 @@ $location_btn.addEventListener('click',()=>{
         })
     })
 })
-socket.emit('join',{username,room},(erro)=>{
+socket.emit('join',{username,room},(error)=>{
     if(error){
         alert(error)
         location.href='/'
