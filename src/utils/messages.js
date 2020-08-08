@@ -4,7 +4,7 @@ const generateMessage=(username, text)=>{
         text,
         createdAt: new Date().getTime()
     }
-    module.exports={
-        generateMessage
-    }
+}
+module.exports={
+    generateMessage
 }

@@ -8,3 +8,7 @@ const server = http.createServer(app);
 const { generateMessage }= require('./utils/messages');
 const Filter = require('bad-words');
 const io = socketio(server);
+
+const {addUser, removeUser, getUser, getUsersInRoom } = reqire('/utils/users');
+const publicDirectory=path.join(__dirname,'..');
+app.use(express.static(publicDirectory));
