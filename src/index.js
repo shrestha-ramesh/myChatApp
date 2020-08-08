@@ -25,4 +25,23 @@ io.on('connection',(socket)=>{
         });
         callback()
     })
+    socket.on('disconnect', ()=>{
+        const user=removeUser(socket.id);
+        if(user){
+            io.to(user.room).emit('message', generateMessage(`${user.username} has left.`))
+            io.to(user.room).emit('roomData', {
+                room:user.room,
+                users:getUsersInRoom(user.room)
+            })
+        }
+    })
+    socket.on('sendLocation', (location, callback)=>{
+        const user = getUser(socket.id);
+        console.log(user.username);
+        io.to(user.room).emit('locationMessage', generateMessage(user.username,location))
+        callback()
+    })
 });
+server.listen(process.env.PORT,()=>{
+    console.log("Server is running at port "+process.env.PORT);
+})
