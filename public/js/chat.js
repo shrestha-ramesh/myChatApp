@@ -73,7 +73,7 @@ $location_btn.addEventListener('click',()=>{
         return alert('Geolocation is not supported by your browser');
     }
     navigator.geolocation.getCurrentPosition((position)=>{
-        socket.emit('sendLocatino', `https://google.com/maps?q=${position.coords.latitude}, ${position.coords.longitude}`,()=>{
+        socket.emit('sendLocation', `https://google.com/maps?q=${position.coords.latitude}, ${position.coords.longitude}`,()=>{
             console.log("Location Delivered")
             $location_btn.removeAttribute('disabled')
         })
